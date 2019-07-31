@@ -247,7 +247,15 @@ namespace HumaneSociety
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-           
+            var newShot = db.Shots.Where(s => s.Name == shotName).First();
+            AnimalShot animalShot = new AnimalShot();
+
+            animalShot.AnimalId = animal.AnimalId;
+            animalShot.ShotId = newShot.ShotId;
+            animalShot.DateReceived = DateTime.Today;
+
+            db.AnimalShots.InsertOnSubmit(animalShot);
+            db.SubmitChanges();
         }
     }
 }
