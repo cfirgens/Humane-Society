@@ -206,7 +206,8 @@ namespace HumaneSociety
 
         internal static void ReadEmployee(Employee employee)
         {
-
+            Employee fetchedEmployee = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
+            Console.WriteLine("Name: "+ employee.FirstName + " " + employee.LastName + "Email: " + employee.Email + "Employee Number: " + employee.EmployeeNumber);
         }
 
         internal static void UpdateEmployee(Employee employee)
