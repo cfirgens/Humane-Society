@@ -192,6 +192,10 @@ namespace HumaneSociety
 
             // Execute the query, and change the column values
             
+
+
+
+
             // you want to change.
             foreach (Animal ord in query)
             {
