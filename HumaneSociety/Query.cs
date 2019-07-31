@@ -176,8 +176,6 @@ namespace HumaneSociety
             newAnimal.Weight = animal.Weight;
             newAnimal.Name = animal.Name;
             newAnimal.Gender = animal.Gender;
-
-
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
         }
@@ -189,8 +187,32 @@ namespace HumaneSociety
         //}
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
-        {            
-            throw new NotImplementedException();
+        {
+            // Query the database for the row to be updated.
+            var query =
+                from ord in db.Animals
+                where ord.AnimalId == animalId
+                select ord;
+
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (Animal ord in query)
+            {
+                Console.WriteLine("Change name?");
+                ord.Name = Console.ReadLine();
+                // Insert any additional changes to column values.
+            }
+
+            // Submit the changes to the database.
+            try
+            {
+                db.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Provide for exceptions.
+            }
         }
 
         internal static void RemoveAnimal(Animal animal)
@@ -238,7 +260,19 @@ namespace HumaneSociety
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
         {
-            throw new NotImplementedException();
+            {
+                if (isAdopted == true)
+                {
+                    adoption.ApprovalStatus = "Approved";
+
+                }
+                else
+                {
+                    adoption.ApprovalStatus = "Pending";
+                }
+                db.Adoptions.InsertOnSubmit(adoption);
+                db.SubmitChanges();
+            }
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
