@@ -4,9 +4,10 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 #DbConfig Files
-./HumaneSociety/App.config
-./HumaneSociety/Properties/Settings.settings
-./HumaneSociety/Properties/Settings.Designer
+/HumaneSociety/App.config
+/HumaneSociety/Properties/Settings.settings
+/HumaneSociety/Properties/Settings.Designer
+
 # User-specific files
 *.suo
 *.user
