@@ -204,7 +204,10 @@ namespace HumaneSociety
         
         internal static Room GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            {
+                Room room = db.Rooms.Where(a => a.AnimalId == animalId).First();
+                return room;
+            }
         }
         
         internal static int GetDietPlanId(string dietPlanName)
@@ -241,7 +244,7 @@ namespace HumaneSociety
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-            throw new NotImplementedException();
+           
         }
     }
 }
