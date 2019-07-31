@@ -223,47 +223,58 @@ namespace HumaneSociety
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
-            Animal newAnimal = new Animal();
-            newAnimal.Weight = animal.Weight;
-            newAnimal.Name = animal.Name;
-            newAnimal.Gender = animal.Gender;
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
         }
 
-        //internal static Animal GetAnimalByID(int id)
-        //{
-            
-        //    Animal animalFromDB = db.Animals.Where(a => a.AnimalId == animal.AnimalId);
-        //}
+        internal static Animal GetAnimalByID(int id)
+        {
+            Animal animalFromDB = db.Animals.Where(a => a.AnimalId == id).Single();
+            return animalFromDB;
+        }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
             // Query the database for the row to be updated.
-            var query =
+            var query = 
                 from ord in db.Animals
                 where ord.AnimalId == animalId
                 select ord;
 
             // Execute the query, and change the column values
+            
+
+
+
+
             // you want to change.
             foreach (Animal ord in query)
             {
                 Console.WriteLine("Change name?");
                 ord.Name = Console.ReadLine();
+                Console.WriteLine("Change Weight?");
+                ord.Weight = int.Parse(Console.ReadLine());
+                Console.WriteLine("Change Gender?");
+                ord.Gender = Console.ReadLine();
+                
+                
                 // Insert any additional changes to column values.
             }
 
             // Submit the changes to the database.
             try
             {
+                
                 db.SubmitChanges();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                // Provide for exceptions.
+                Console.WriteLine("No animals have a AnimalId that matches the Animal passed in.");
+                Console.WriteLine("No update have been made.");
+                return;
             }
+        }
         }
 
         internal static void RemoveAnimal(Animal animal)
