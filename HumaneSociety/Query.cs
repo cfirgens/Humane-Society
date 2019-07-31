@@ -166,25 +166,55 @@ namespace HumaneSociety
         // TODO: Allow any of the CRUD operations to occur here
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {
+            switch (crudOperation)
+            {
+                case "create":
+                    CreateNewEmployee(employee);
+                    break;
 
+                case "read":
+                    ReadEmployee(employee);
+                    break;
+
+                case "update":
+                    UpdateEmployee(employee);
+                    break;
+
+                case "delete":
+                    DeleteEmployee(employee);
+                    break;
+
+                default:
+                    UserInterface.DisplayUserOptions("Input was not recognized, please try again");
+                    break;
+            }
         }
 
-        internal static void CreateNewEmployee()
+        internal static void CreateNewEmployee(Employee employee)
+        {
+            bool newEmployee = db.Employees.Where(e => e.FirstName == employee.FirstName && e.LastName == employee.LastName).Any();
+            if (!newEmployee)
+            {
+                db.Employees.InsertOnSubmit(employee);
+                db.SubmitChanges();
+            }
+            else
+            {
+                UserInterface.DisplayUserOptions("Employee already exists");
+            }
+        }
+
+        internal static void ReadEmployee(Employee employee)
         {
 
         }
 
-        internal static void ReadEmployee()
+        internal static void UpdateEmployee(Employee employee)
         {
 
         }
 
-        internal static void UpdateEmployee()
-        {
-
-        }
-
-        internal static void DeleteEmployee()
+        internal static void DeleteEmployee(Employee employee)
         {
 
         }
