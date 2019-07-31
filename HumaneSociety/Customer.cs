@@ -79,12 +79,12 @@ namespace HumaneSociety
             Console.Clear();
             UserInterface.DisplayUserOptions("Please enter the ID of the animal you wish to adopt or type reset or exit");
             int iD = UserInterface.GetIntegerData();
-            var animal = Query.GetAnimalByID(iD);
-            UserInterface.DisplayAnimalInfo(animal);
+            //var animal = Query.GetAnimalByID(id);
+            //UserInterface.DisplayAnimalInfo(animal);
             UserInterface.DisplayUserOptions("Would you like to adopt?");
             if ((bool)UserInterface.GetBitData())
             {
-                Query.Adopt(animal, client);
+                //Query.Adopt(animal, client);
                 UserInterface.DisplayUserOptions("Adoption request sent we will hold $75 adoption fee until processed");
             }
         }
