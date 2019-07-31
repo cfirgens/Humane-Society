@@ -170,22 +170,9 @@ namespace HumaneSociety
         }
 
         // TODO: Animal CRUD Operations
-        internal static void AddAnimal(Animal animal, string name, int weight, int age, string demeanor, bool kids, bool pets, string gender, string adoptionStatus, int category, int diet, int employee)
+        internal static void AddAnimal(Animal animal)
         {
-            Animal newAnimal = new Animal();
-            newAnimal.Name = name;
-            newAnimal.Weight = weight;
-            newAnimal.Age = age;
-            newAnimal.Demeanor = demeanor;
-            newAnimal.KidFriendly = kids;
-            newAnimal.PetFriendly = pets;
-            newAnimal.Gender = gender;
-            newAnimal.AdoptionStatus = adoptionStatus;
-            newAnimal.CategoryId = category;
-            newAnimal.DietPlanId = diet;
-            newAnimal.EmployeeId = employee;
-
-            db.Animals.InsertOnSubmit(newAnimal);
+            db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
         }
 
@@ -195,8 +182,32 @@ namespace HumaneSociety
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
-        {            
-            throw new NotImplementedException();
+        {
+            // Query the database for the row to be updated.
+            var query =
+                from ord in db.Animals
+                where ord.AnimalId == animalId
+                select ord;
+
+            // Execute the query, and change the column values
+            // you want to change.
+            foreach (Animal ord in query)
+            {
+                Console.WriteLine("Change name?");
+                ord.Name = Console.ReadLine();
+                // Insert any additional changes to column values.
+            }
+
+            // Submit the changes to the database.
+            try
+            {
+                db.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Provide for exceptions.
+            }
         }
 
         internal static void RemoveAnimal(Animal animal)
