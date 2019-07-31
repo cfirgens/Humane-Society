@@ -217,6 +217,9 @@ namespace HumaneSociety
 
         internal static void DeleteEmployee(Employee employee)
         {
+            Employee employeeToDelete = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
+            db.Employees.DeleteOnSubmit(employeeToDelete);
+            db.SubmitChanges();
 
         }
 
@@ -275,7 +278,7 @@ namespace HumaneSociety
                 return;
             }
         }
-        }
+        
 
         internal static void RemoveAnimal(Animal animal)
         {
