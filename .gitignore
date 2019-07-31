@@ -6,7 +6,7 @@
 #DbConfig Files
 /HumaneSociety/App.config
 /HumaneSociety/Properties/Settings.settings
-/HumaneSociety/Properties/Settings.Designer
+/HumaneSociety/Properties/Settings.Designer.cs
 
 # User-specific files
 *.suo
