@@ -212,7 +212,14 @@ namespace HumaneSociety
 
         internal static void UpdateEmployee(Employee employee)
         {
+            Employee updateEmployee = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
 
+            updateEmployee.FirstName = employee.FirstName;
+            updateEmployee.LastName = employee.LastName;
+            updateEmployee.Email = employee.Email;
+            updateEmployee.EmployeeNumber = employee.EmployeeNumber;
+
+            db.SubmitChanges();
         }
 
         internal static void DeleteEmployee(Employee employee)
