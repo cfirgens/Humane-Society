@@ -268,15 +268,13 @@ namespace HumaneSociety
                             break;
 
                         case 5:
-                        //UpdateKidFriendly(animalInDb, update.Value);
-                       // if (update.Value = true)
-                        //{
-                          //  animalInDb.KidFriendly = update.Value;
-                       // }
-                        //
-                            break;
+
+                        animalInDb.KidFriendly = bool.Parse(update.Value);
+                        break;
+
                         case 6:
-                            //animalInDb.PetFriendly = update.Value
+
+                          animalInDb.PetFriendly = bool.Parse(update.Value);
 
                             break;
 
@@ -299,6 +297,7 @@ namespace HumaneSociety
                 Console.WriteLine("Change Demeanor?");
             animalInDb.Demeanor = Console.ReadLine();
 
+
                 
                 
                 // Insert any additional changes to column values.
@@ -317,7 +316,9 @@ namespace HumaneSociety
                 Console.WriteLine("No update have been made.");
                 return;
             }
-        
+
+
+
         }
 
 
