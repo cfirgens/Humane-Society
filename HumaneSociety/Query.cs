@@ -324,6 +324,11 @@ namespace HumaneSociety
                     case 7:
                         animals = animals.Where(a => a.Weight == int.Parse(update.Value));
                         break;
+                    case 8:
+                        animals = animals.Where(a => a.AnimalId == int.Parse(update.Value));
+                        break;
+                    case 9:
+                        break;
                 }
             }
             return animals;
