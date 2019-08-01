@@ -166,7 +166,61 @@ namespace HumaneSociety
         // TODO: Allow any of the CRUD operations to occur here
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {
-            throw new NotImplementedException();
+            switch (crudOperation)
+            {
+                case "create":
+                    CreateNewEmployee(employee);
+                    break;
+
+                case "read":
+                    ReadEmployee(employee);
+                    break;
+
+                case "update":
+                    UpdateEmployee(employee);
+                    break;
+
+                case "delete":
+                    DeleteEmployee(employee);
+                    break;
+
+                default:
+                    UserInterface.DisplayUserOptions("Input was not recognized, please try again");
+                    break;
+            }
+        }
+
+        internal static void CreateNewEmployee(Employee employee)
+        {
+            bool newEmployee = db.Employees.Where(e => e.FirstName == employee.FirstName && e.LastName == employee.LastName).Any();
+            if (!newEmployee)
+            {
+                db.Employees.InsertOnSubmit(employee);
+                db.SubmitChanges();
+            }
+            else
+            {
+                UserInterface.DisplayUserOptions("Employee already exists");
+            }
+        }
+
+        internal static void ReadEmployee(Employee employee)
+        {
+            Employee fetchedEmployee = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
+            Console.WriteLine("Name: "+ employee.FirstName + " " + employee.LastName + "Email: " + employee.Email + "Employee Number: " + employee.EmployeeNumber);
+        }
+
+        internal static void UpdateEmployee(Employee employee)
+        {
+
+        }
+
+        internal static void DeleteEmployee(Employee employee)
+        {
+            Employee employeeToDelete = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
+            db.Employees.DeleteOnSubmit(employeeToDelete);
+            db.SubmitChanges();
+
         }
 
         // TODO: Animal CRUD Operations
@@ -178,13 +232,55 @@ namespace HumaneSociety
 
         internal static Animal GetAnimalByID(int id)
         {
-            throw new NotImplementedException();
+            Animal animalFromDB = db.Animals.Where(a => a.AnimalId == id).Single();
+            return animalFromDB;
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
+
+            // Query the database for the row to be updated.
+            var query = 
+                from ord in db.Animals
+                where ord.AnimalId == animalId
+                select ord;
+
+            // Execute the query, and change the column values
             
+
+
+
+
+            // you want to change.
+            foreach (Animal ord in query)
+            {
+                Console.WriteLine("Change name?");
+                ord.Name = Console.ReadLine();
+                Console.WriteLine("Change Weight?");
+                ord.Weight = int.Parse(Console.ReadLine());
+                Console.WriteLine("Change Gender?");
+                ord.Gender = Console.ReadLine();
+                
+                
+                // Insert any additional changes to column values.
+            }
+
+            // Submit the changes to the database.
+            try
+            {
+                
+                db.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine("No animals have a AnimalId that matches the Animal passed in.");
+                Console.WriteLine("No update have been made.");
+                return;
+            }
+
         }
+        
 
         internal static void RemoveAnimal(Animal animal)
         {
@@ -222,12 +318,18 @@ namespace HumaneSociety
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            throw new NotImplementedException();
+            Adoption adopted = new Adoption();
+            adopted.AnimalId = animal.AnimalId;
+            adopted.ClientId = client.ClientId;
+            
+            db.Adoptions.InsertOnSubmit(adopted);
+            db.SubmitChanges();
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+            IQueryable<Adoption> pendingAdoptions = db.Adoptions.Where(a => a.ApprovalStatus == "Pending");
+            return pendingAdoptions;
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
@@ -249,7 +351,9 @@ namespace HumaneSociety
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            Adoption adopted = db.Adoptions.Where(a => a.AnimalId == animalId && a.ClientId == clientId).First();
+            db.Adoptions.DeleteOnSubmit(adopted);
+            db.SubmitChanges();
         }
 
         // TODO: Shots Stuff
