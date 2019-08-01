@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HumaneSociety
 {
-    public static class Query
+    public static class Query 
     {        
         static HumaneSocietyDataContext db;
 
@@ -245,6 +245,7 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
+
             // Query the database for the row to be updated.
             var query = 
                 from ord in db.Animals
@@ -284,12 +285,14 @@ namespace HumaneSociety
                 Console.WriteLine("No update have been made.");
                 return;
             }
+
         }
         
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            db.Animals.DeleteOnSubmit(animal);
+            db.SubmitChanges();
         }
         
         // TODO: Animal Multi-Trait Search
