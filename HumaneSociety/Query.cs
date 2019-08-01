@@ -402,7 +402,8 @@ namespace HumaneSociety
         {
             Adoption adopted = new Adoption();
             adopted.AnimalId = animal.AnimalId;
-            adopted.ClientId = client.ClientId; 
+            adopted.ClientId = client.ClientId;
+            adopted.ApprovalStatus = "pending";
             
             db.Adoptions.InsertOnSubmit(adopted);
             db.SubmitChanges();
