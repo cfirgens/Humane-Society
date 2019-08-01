@@ -10,6 +10,10 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
+            //HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            //var tjing = db.Animals.Where(s => s.AnimalId == 1).Single();
+            //db.Employees.InsertOnSubmit(new Employee { FirstName = "Mike", EmployeeNumber = 10005 });
+            //db.SubmitChanges();
             PointOfEntry.Run();
         }
     }
