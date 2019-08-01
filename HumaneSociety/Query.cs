@@ -234,31 +234,75 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
+
             // Query the database for the row to be updated.
             var query = 
                 from ord in db.Animals
                 where ord.AnimalId == animalId
                 select ord;
 
+            var animalInDb = db.Animals.Where(a => a.AnimalId == animalId).Single();
+
+
             // Execute the query, and change the column values
-            
-
-
-
-
             // you want to change.
-            foreach (Animal ord in query)
-            {
+            
+                foreach (KeyValuePair<int, string> update in updates)
+
+                    switch (update.Key)
+                    {
+                        case 1:
+                        animalInDb.CategoryId = int.Parse(update.Value);
+                        break;
+
+                        case 2:
+                        animalInDb.Name = update.Value;
+                            break;
+
+                        case 3:
+                        animalInDb.Age = int.Parse(update.Value);
+                            break;
+
+                        case 4:
+                        animalInDb.Demeanor = update.Value;
+                            break;
+
+                        case 5:
+                        //UpdateKidFriendly(animalInDb, update.Value);
+                       // if (update.Value = true)
+                        //{
+                          //  animalInDb.KidFriendly = update.Value;
+                       // }
+                        //
+                            break;
+                        case 6:
+                            //animalInDb.PetFriendly = update.Value
+
+                            break;
+
+                        case 7:
+                        animalInDb.Weight = int.Parse(update.Value);
+                            break;
+
+                        default:
+                            UserInterface.DisplayUserOptions("Input was not recognized, please try again");
+                            break;
+                    }
+                Console.WriteLine("Change Category ID?");
+            animalInDb.CategoryId = int.Parse(Console.ReadLine());
                 Console.WriteLine("Change name?");
-                ord.Name = Console.ReadLine();
+            animalInDb.Name = Console.ReadLine();
                 Console.WriteLine("Change Weight?");
-                ord.Weight = int.Parse(Console.ReadLine());
+            animalInDb.Weight = int.Parse(Console.ReadLine());
                 Console.WriteLine("Change Gender?");
-                ord.Gender = Console.ReadLine();
+            animalInDb.Gender = Console.ReadLine();
+                Console.WriteLine("Change Demeanor?");
+            animalInDb.Demeanor = Console.ReadLine();
+
                 
                 
                 // Insert any additional changes to column values.
-            }
+            
 
             // Submit the changes to the database.
             try
@@ -273,8 +317,9 @@ namespace HumaneSociety
                 Console.WriteLine("No update have been made.");
                 return;
             }
+        
         }
-        }
+
 
         internal static void RemoveAnimal(Animal animal)
         {
