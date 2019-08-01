@@ -276,7 +276,7 @@ namespace HumaneSociety
                 employee = Query.EmployeeLogin(userName, password);
                 UserInterface.DisplayUserOptions("Login successfull. Welcome.");
             }
-            catch
+            catch(Exception e)
             {
                 Console.Clear();
                 UserInterface.DisplayUserOptions("Employee not found, please try again, create a new user or contact your administrator");

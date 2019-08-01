@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HumaneSociety
 {
-    public static class Query
+    public static class Query 
     {        
         static HumaneSocietyDataContext db;
 
@@ -206,16 +206,27 @@ namespace HumaneSociety
 
         internal static void ReadEmployee(Employee employee)
         {
-
+            Employee fetchedEmployee = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
+            Console.WriteLine("Name: "+ employee.FirstName + " " + employee.LastName + "Email: " + employee.Email + "Employee Number: " + employee.EmployeeNumber);
         }
 
         internal static void UpdateEmployee(Employee employee)
         {
+            Employee updateEmployee = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
 
+            updateEmployee.FirstName = employee.FirstName;
+            updateEmployee.LastName = employee.LastName;
+            updateEmployee.Email = employee.Email;
+            updateEmployee.EmployeeNumber = employee.EmployeeNumber;
+
+            db.SubmitChanges();
         }
 
         internal static void DeleteEmployee(Employee employee)
         {
+            Employee employeeToDelete = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
+            db.Employees.DeleteOnSubmit(employeeToDelete);
+            db.SubmitChanges();
 
         }
 
@@ -286,16 +297,16 @@ namespace HumaneSociety
                             UserInterface.DisplayUserOptions("Input was not recognized, please try again");
                             break;
                     }
-                Console.WriteLine("Change Category ID?");
-            animalInDb.CategoryId = int.Parse(Console.ReadLine());
-                Console.WriteLine("Change name?");
-            animalInDb.Name = Console.ReadLine();
-                Console.WriteLine("Change Weight?");
-            animalInDb.Weight = int.Parse(Console.ReadLine());
-                Console.WriteLine("Change Gender?");
-            animalInDb.Gender = Console.ReadLine();
-                Console.WriteLine("Change Demeanor?");
-            animalInDb.Demeanor = Console.ReadLine();
+                //Console.WriteLine("Change Category ID?");
+                //animalInDb.CategoryId = int.Parse(Console.ReadLine());
+                //Console.WriteLine("Change name?");
+                //animalInDb.Name = Console.ReadLine();
+                //Console.WriteLine("Change Weight?");
+                //animalInDb.Weight = int.Parse(Console.ReadLine());
+                //Console.WriteLine("Change Gender?");
+                //animalInDb.Gender = Console.ReadLine();
+                //Console.WriteLine("Change Demeanor?");
+                //animalInDb.Demeanor = Console.ReadLine();
 
 
                 
@@ -316,22 +327,54 @@ namespace HumaneSociety
                 Console.WriteLine("No update have been made.");
                 return;
             }
-
-
-
         }
-
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            Animal animalToDelete = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            db.Animals.DeleteOnSubmit(animal);
+            db.SubmitChanges();
         }
         
         // TODO: Animal Multi-Trait Search
-        internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
-        {
-            throw new NotImplementedException();
+        internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates)
+        { 
+            IQueryable<Animal> animals = db.Animals;         
+            foreach (KeyValuePair<int, string> update in updates)
+            {
+                switch (update.Key)
+                {
+                    case 1:
+                        animals = animals.Where(a => a.CategoryId == int.Parse(update.Value));
+                        break;
+                    case 2:
+                        animals = animals.Where(a => a.Name == update.Value);
+                        break;
+                    case 3:
+                        animals = animals.Where(a => a.Age == int.Parse(update.Value));
+                        break;
+                    case 4:
+                        animals = animals.Where(a => a.Demeanor == update.Value);
+                        break;
+                    case 5:
+                        animals = animals.Where(a => a.KidFriendly == bool.Parse(update.Value));
+                        break;
+                    case 6:
+                        animals = animals.Where(a => a.PetFriendly == bool.Parse(update.Value));
+                        break;
+                    case 7:
+                        animals = animals.Where(a => a.Weight == int.Parse(update.Value));
+                        break;
+                    case 8:
+                        animals = animals.Where(a => a.AnimalId == int.Parse(update.Value));
+                        break;
+                    case 9:
+                        break;
+                }
+            }
+            return animals;
         }
+        
          
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
