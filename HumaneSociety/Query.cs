@@ -231,7 +231,7 @@ namespace HumaneSociety
         }
 
         // TODO: Animal CRUD Operations
-        internal static void AddAnimal(Animal animal)
+        internal static void AddAnimal(Animal animal) //needs functionality to add gender, adoption status, and employee id or getting info breaks
         {
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
@@ -430,7 +430,6 @@ namespace HumaneSociety
                 {
                     adoption.ApprovalStatus = "Pending";
                 }
-                //db.Adoptions.InsertOnSubmit(adoption);
                 db.SubmitChanges();
             }
         }
