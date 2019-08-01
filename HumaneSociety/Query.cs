@@ -404,7 +404,10 @@ namespace HumaneSociety
             adopted.AnimalId = animal.AnimalId;
             adopted.ClientId = client.ClientId;
             adopted.ApprovalStatus = "pending";
-            
+            adopted.AdoptionFee = 100;
+            adopted.PaymentCollected = false;
+            Console.WriteLine("Your adoption is pending.");
+            Console.ReadLine();
             db.Adoptions.InsertOnSubmit(adopted);
             db.SubmitChanges();
         }
@@ -427,7 +430,7 @@ namespace HumaneSociety
                 {
                     adoption.ApprovalStatus = "Pending";
                 }
-                db.Adoptions.InsertOnSubmit(adoption);
+                //db.Adoptions.InsertOnSubmit(adoption);
                 db.SubmitChanges();
             }
         }
