@@ -133,7 +133,8 @@ namespace HumaneSociety
         {
             Room r = Query.GetRoom(animal.AnimalId);
             string roomId = r != null  ? r.RoomId.ToString() : "Unknown";
-            List<string> info = new List<string>() {"ID: " + animal.AnimalId, animal.Name, animal.Age + " years old", "Demeanour: " + animal.Demeanor, "Kid friendly: " + BoolToYesNo(animal.KidFriendly), "pet friendly: " + BoolToYesNo(animal.PetFriendly), $"Location: " + roomId, "Weight: " + animal.Weight.ToString(),  "Food amount in cups:" + animal.DietPlan.FoodAmountInCups};
+            string adoptionStatus = animal.AdoptionStatus != null ? animal.AdoptionStatus : "Open for adoption";
+            List<string> info = new List<string>() {"ID: " + animal.AnimalId, animal.Name, animal.Age + " years old", "Demeanour: " + animal.Demeanor, "Kid friendly: " + BoolToYesNo(animal.KidFriendly), "pet friendly: " + BoolToYesNo(animal.PetFriendly), $"Location: " + roomId, "Weight: " + animal.Weight.ToString(),  "Food amount in cups:" + animal.DietPlan.FoodAmountInCups, "Adoption Status: " + adoptionStatus};
             DisplayUserOptions(info);
             Console.ReadLine();
 

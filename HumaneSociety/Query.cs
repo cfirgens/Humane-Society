@@ -231,7 +231,7 @@ namespace HumaneSociety
         }
 
         // TODO: Animal CRUD Operations
-        internal static void AddAnimal(Animal animal) //needs functionality to add gender, adoption status, and employee id or getting info breaks
+        internal static void AddAnimal(Animal animal) 
         {
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
@@ -245,76 +245,48 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {
-
-            // Query the database for the row to be updated.
-            var query = 
-                from ord in db.Animals
-                where ord.AnimalId == animalId
-                select ord;
-
-            var animalInDb = db.Animals.Where(a => a.AnimalId == animalId).Single();
-
-
-            // Execute the query, and change the column values
-            // you want to change.
-            
-                foreach (KeyValuePair<int, string> update in updates)
-
-                    switch (update.Key)
-                    {
-                        case 1:
+            var animalInDb = db.Animals.Where(a => a.AnimalId == animalId).Single();            
+            foreach (KeyValuePair<int, string> update in updates)
+            {
+                switch (update.Key)
+                {
+                    case 1:
                         animalInDb.CategoryId = int.Parse(update.Value);
                         break;
 
-                        case 2:
+                    case 2:
                         animalInDb.Name = update.Value;
-                            break;
+                        break;
 
-                        case 3:
+                    case 3:
                         animalInDb.Age = int.Parse(update.Value);
-                            break;
+                        break;
 
-                        case 4:
+                    case 4:
                         animalInDb.Demeanor = update.Value;
-                            break;
+                        break;
 
-                        case 5:
+                    case 5:
 
                         animalInDb.KidFriendly = bool.Parse(update.Value);
                         break;
 
-                        case 6:
+                    case 6:
 
-                          animalInDb.PetFriendly = bool.Parse(update.Value);
+                        animalInDb.PetFriendly = bool.Parse(update.Value);
 
-                            break;
+                        break;
 
-                        case 7:
+                    case 7:
                         animalInDb.Weight = int.Parse(update.Value);
-                            break;
+                        break;
 
-                        default:
-                            UserInterface.DisplayUserOptions("Input was not recognized, please try again");
-                            break;
-                    }
-                //Console.WriteLine("Change Category ID?");
-                //animalInDb.CategoryId = int.Parse(Console.ReadLine());
-                //Console.WriteLine("Change name?");
-                //animalInDb.Name = Console.ReadLine();
-                //Console.WriteLine("Change Weight?");
-                //animalInDb.Weight = int.Parse(Console.ReadLine());
-                //Console.WriteLine("Change Gender?");
-                //animalInDb.Gender = Console.ReadLine();
-                //Console.WriteLine("Change Demeanor?");
-                //animalInDb.Demeanor = Console.ReadLine();
+                    default:
+                        UserInterface.DisplayUserOptions("Input was not recognized, please try again");
+                        break;
+                }
+            }
 
-
-                
-                
-                // Insert any additional changes to column values.
-            
-
-            // Submit the changes to the database.
             try
             {
                 
@@ -385,16 +357,13 @@ namespace HumaneSociety
         
         internal static Room GetRoom(int animalId)
         {
-
            Room room = db.Rooms.Where(r => r.AnimalId == animalId).FirstOrDefault();
-
-           return room;
-            
+           return room;            
         }
         
         internal static int GetDietPlanId(string dietPlanName)
         {
-            DietPlan dietPlans = db.DietPlans.Where(d => d.Name == dietPlanName).First();
+            DietPlan dietPlans = db.DietPlans.Where(d => d.Name == dietPlanName).FirstOrDefault();
             return dietPlans.DietPlanId;
         }
 
@@ -404,7 +373,7 @@ namespace HumaneSociety
             Adoption adopted = new Adoption();
             adopted.AnimalId = animal.AnimalId;
             adopted.ClientId = client.ClientId;
-            adopted.ApprovalStatus = "pending";
+            adopted.ApprovalStatus = "Pending";
             adopted.AdoptionFee = 100;
             adopted.PaymentCollected = false;
             Console.WriteLine("Your adoption is pending.");
