@@ -385,10 +385,11 @@ namespace HumaneSociety
         
         internal static Room GetRoom(int animalId)
         {
-            {
-                Room room = db.Rooms.Where(a => a.AnimalId == animalId).First();
-                return room;
-            }
+
+           Room room = db.Rooms.Where(r => r.AnimalId == animalId).FirstOrDefault();
+
+           return room;
+            
         }
         
         internal static int GetDietPlanId(string dietPlanName)
